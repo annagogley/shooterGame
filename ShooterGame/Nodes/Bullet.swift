@@ -18,7 +18,6 @@ class Bullet: SCNNode {
         self.physicsBody?.isAffectedByGravity = false
         self.physicsBody?.categoryBitMask = CollisionCategory.bullets.rawValue
         self.physicsBody?.contactTestBitMask = CollisionCategory.target.rawValue
-        
         self.geometry?.materials.first?.diffuse.contents = UIColor.yellow
     }
     

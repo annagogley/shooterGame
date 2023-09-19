@@ -16,13 +16,11 @@ class Sphere: SCNNode {
         let shape = SCNPhysicsShape(geometry: sphere, options: nil)
         self.physicsBody = SCNPhysicsBody(type: .dynamic, shape: shape)
         self.physicsBody?.isAffectedByGravity = false
-        
         self.physicsBody?.categoryBitMask = CollisionCategory.target.rawValue
         self.physicsBody?.contactTestBitMask = CollisionCategory.bullets.rawValue
-        
         self.geometry?.materials.first?.diffuse.contents = UIColor.red
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

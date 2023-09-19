@@ -12,9 +12,9 @@ import AVFoundation
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
-    @IBOutlet var sceneView: ARSCNView!
+//    @IBOutlet var sceneView: ARSCNView!
     
-    let gameSet = ShooterSettings.sharedInstance
+    let gameSet = ShooterSettings.shared
     var player = AVAudioPlayer()
     let gunSoundURL =  Bundle.main.url(forResource: "art.scnassets/gun", withExtension: "mp3")!
     let blowSoundURL =  Bundle.main.url(forResource: "art.scnassets/blow", withExtension: "mp3")!
@@ -32,7 +32,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     private var counter = 3
     private var timeRemaining = 60
     
-    //MARK: UI elements
+    // MARK: UI elements
+    private let sceneView: ARSCNView = {
+        let sceneView = ARSCNView()
+        return sceneView
+    }()
+    
     private let crossImage: UIImageView = {
         let image = UIImageView(image: UIImage(named: "cross"))
         image.contentMode = .scaleAspectFit
@@ -120,7 +125,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
 }
 
-//MARK: Views
+// MARK: Views
 extension ViewController {
     
     private func setUpView() {
@@ -144,7 +149,7 @@ extension ViewController {
     }
     
     @objc private func shootButtonTapped() {
-        guard gameSet.state == .InGame else {
+        guard gameSet.state == .inGame else {
             beginPlaying()
             return
         }
@@ -171,11 +176,11 @@ extension ViewController {
     }
 }
 
-//MARK: playing elements
+// MARK: playing elements
 extension ViewController {
     
     func beginPlaying() {
-        gameSet.state = .InGame
+        gameSet.state = .inGame
         self.userScore = 0
         self.shotCount = 0
         self.counter = 3
@@ -204,13 +209,13 @@ extension ViewController {
         return (SCNVector3Zero, SCNVector3Zero)
     }
     
-    func floatBetween(_ first: Float,  and second: Float) -> Float {
+    func floatBetween(_ first: Float, and second: Float) -> Float {
         return (Float(arc4random()) / Float(UInt32.max)) * (first - second) + second
     }
     
     func removeNode(_ node: SCNNode) {
         if node is Sphere {
-            //make explosion
+            // make explosion
             let scene = SCNScene(named: "art.scnassets/particles.scn")
             let explosionNode = (scene?.rootNode.childNode(withName: "particles", recursively: true)!)!
             
@@ -218,10 +223,8 @@ extension ViewController {
             sceneView.scene.rootNode.addChildNode(explosionNode)
             playSound(blowSoundURL)
             
-            if let sphere = node as? Sphere
-            {
-                if let index = gameSet.targets.firstIndex(of: sphere)
-                {
+            if let sphere = node as? Sphere {
+                if let index = gameSet.targets.firstIndex(of: sphere) {
                     gameSet.targets.remove(at: index)
                 }
             }
@@ -232,7 +235,7 @@ extension ViewController {
     func endPlaying() {
         DispatchQueue.main.async {
             self.scoreLabel.text = "You've earned \(self.userScore) points. \n You've made \(self.shotCount) shots. \n Tap to continue."
-            self.sceneView.scene.rootNode.enumerateChildNodes { (node, stop) in
+            self.sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
                 node.removeFromParentNode()
             }
             self.shootButton.isEnabled = false
@@ -240,14 +243,14 @@ extension ViewController {
                 self.shootButton.isEnabled = true
             })
         }
-        gameSet.state = .Start
+        gameSet.state = .start
     }
 }
 
 extension ViewController: SCNPhysicsContactDelegate, ARSessionDelegate {
-    //bullet + sphere contact
+    // bullet + sphere contact
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        if (contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.target.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.bullets.rawValue) {
+        if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.target.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.bullets.rawValue {
             self.removeNode(contact.nodeB)
             self.removeNode(contact.nodeA)
             self.userScore += 1
@@ -256,10 +259,10 @@ extension ViewController: SCNPhysicsContactDelegate, ARSessionDelegate {
     }
 }
 
-//MARK: timer + player services
+// MARK: timer + player services
 extension ViewController {
     
-    func playSound(_ url: URL){
+    func playSound(_ url: URL) {
         do {
             player = try AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
             player.prepareToPlay()
@@ -270,11 +273,15 @@ extension ViewController {
     }
     
     func countdown() {
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1.0,
+                                     target: self,
+                                     selector: #selector(updateCounter),
+                                     userInfo: nil,
+                                     repeats: true)
     }
     
     @objc func updateCounter() {
-        if gameSet.state == .Start {
+        if gameSet.state == .start {
             if counter > 0 {
                 counter -= 1
             } else {

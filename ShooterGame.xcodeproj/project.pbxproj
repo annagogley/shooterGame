@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3780A96B2AB9B74600DF196F /* CollisionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A96A2AB9B74600DF196F /* CollisionCategory.swift */; };
 		37F764A72AB2093F00620C5C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F764A62AB2093F00620C5C /* AppDelegate.swift */; };
 		37F764AB2AB2093F00620C5C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F764AA2AB2093F00620C5C /* ViewController.swift */; };
 		37F764AE2AB2093F00620C5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37F764AC2AB2093F00620C5C /* Main.storyboard */; };
@@ -14,10 +15,11 @@
 		37F764BA2AB2304800620C5C /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F764B92AB2304800620C5C /* Sphere.swift */; };
 		37F764BC2AB3091C00620C5C /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 37F764BB2AB3091B00620C5C /* art.scnassets */; };
 		37F764BE2AB38DA600620C5C /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F764BD2AB38DA600620C5C /* Bullet.swift */; };
-		37F764C02AB38DDA00620C5C /* GameHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F764BF2AB38DDA00620C5C /* GameHelpers.swift */; };
+		37F764C02AB38DDA00620C5C /* ShooterSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F764BF2AB38DDA00620C5C /* ShooterSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3780A96A2AB9B74600DF196F /* CollisionCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionCategory.swift; sourceTree = "<group>"; };
 		37F764A32AB2093F00620C5C /* ShooterGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShooterGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37F764A62AB2093F00620C5C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37F764AA2AB2093F00620C5C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -26,7 +28,7 @@
 		37F764B92AB2304800620C5C /* Sphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sphere.swift; sourceTree = "<group>"; };
 		37F764BB2AB3091B00620C5C /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; name = art.scnassets; path = ShooterGame/art.scnassets; sourceTree = SOURCE_ROOT; };
 		37F764BD2AB38DA600620C5C /* Bullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
-		37F764BF2AB38DDA00620C5C /* GameHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHelpers.swift; sourceTree = "<group>"; };
+		37F764BF2AB38DDA00620C5C /* ShooterSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShooterSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +73,8 @@
 				37F764A62AB2093F00620C5C /* AppDelegate.swift */,
 				37F764AA2AB2093F00620C5C /* ViewController.swift */,
 				37CF7FA62AB46B0300604124 /* Nodes */,
-				37F764BF2AB38DDA00620C5C /* GameHelpers.swift */,
+				37F764BF2AB38DDA00620C5C /* ShooterSettings.swift */,
+				3780A96A2AB9B74600DF196F /* CollisionCategory.swift */,
 				37F764AC2AB2093F00620C5C /* Main.storyboard */,
 				37F764AF2AB2094200620C5C /* Assets.xcassets */,
 				37F764BB2AB3091B00620C5C /* art.scnassets */,
@@ -89,6 +92,7 @@
 				37F7649F2AB2093F00620C5C /* Sources */,
 				37F764A02AB2093F00620C5C /* Frameworks */,
 				37F764A12AB2093F00620C5C /* Resources */,
+				3780A96C2AB9B7C000DF196F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -145,13 +149,34 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3780A96C2AB9B7C000DF196F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"error: SwiftLint does not exist, download it from https://github.com/realm/SwiftLint\"\n  exit 1\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		37F7649F2AB2093F00620C5C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				37F764AB2AB2093F00620C5C /* ViewController.swift in Sources */,
-				37F764C02AB38DDA00620C5C /* GameHelpers.swift in Sources */,
+				37F764C02AB38DDA00620C5C /* ShooterSettings.swift in Sources */,
+				3780A96B2AB9B74600DF196F /* CollisionCategory.swift in Sources */,
 				37F764A72AB2093F00620C5C /* AppDelegate.swift in Sources */,
 				37F764BA2AB2304800620C5C /* Sphere.swift in Sources */,
 				37F764BE2AB38DA600620C5C /* Bullet.swift in Sources */,
