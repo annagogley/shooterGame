@@ -12,7 +12,7 @@ import AVFoundation
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
-//    @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet var sceneView: ARSCNView!
     
     let gameSet = ShooterSettings.shared
     var player = AVAudioPlayer()
@@ -33,10 +33,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     private var timeRemaining = 60
     
     // MARK: UI elements
-    private let sceneView: ARSCNView = {
-        let sceneView = ARSCNView()
-        return sceneView
-    }()
+//    private var sceneView = ARSCNView()
     
     private let crossImage: UIImageView = {
         let image = UIImageView(image: UIImage(named: "cross"))

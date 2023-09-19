@@ -1,0 +1,4 @@
+disabled_rules:
+  - trailing_whitespace
+  - legacy_random
+  - line_length
