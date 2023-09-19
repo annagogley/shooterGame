@@ -10,9 +10,7 @@ import SceneKit
 import ARKit
 import AVFoundation
 
-class ViewController: UIViewController, ARSCNViewDelegate {
-
-    @IBOutlet var sceneView: ARSCNView!
+class ShooterViewController: UIViewController, ARSCNViewDelegate {
     
     let gameSet = ShooterSettings.shared
     var player = AVAudioPlayer()
@@ -23,7 +21,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     private var userScore: Int = 0 {
         didSet {
             DispatchQueue.main.async {
-                self.scoreLabel.text = String(self.userScore)
+                self.mainView.scoreLabel.text = String(self.userScore)
             }
         }
     }
@@ -32,85 +30,30 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     private var counter = 3
     private var timeRemaining = 60
     
-    // MARK: UI elements
-//    private var sceneView = ARSCNView()
-    
-    private let crossImage: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "cross"))
-        image.contentMode = .scaleAspectFit
-        image.image = image.image?.withRenderingMode(.alwaysTemplate)
-        image.tintColor = .white
-        return image
-    }()
-    
-    private var textLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Your score"
-        label.font = .systemFont(ofSize: 20, weight: .bold)
-        return label
-    }()
-    
-    private var countdownLabel: UILabel = {
-        let label = UILabel()
-        label.text = "3"
-        label.font = .systemFont(ofSize: 40, weight: .bold)
-        label.textAlignment = .center
-        return label
-    }()
-    
-    private var timeRemainingLabel: UILabel = {
-        let label = UILabel()
-        label.text = "60"
-        label.font = .systemFont(ofSize: 40, weight: .bold)
-        label.textAlignment = .center
-        return label
-    }()
-    
-    private var scoreLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 20, weight: .bold)
-        label.textAlignment = .center
-        label.numberOfLines = 3
-        return label
-    }()
-    
-    private var shootButton: UIButton = {
-        let button = UIButton()
-        
-        button.backgroundColor = UIColor.red.withAlphaComponent(0.5)
-        button.setTitle("Tap", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 45
-        button.layer.masksToBounds = true
-        return button
-    }()
-    
+    // swiftlint:disable force_cast
+    var mainView: ShooterView { return self.view as! ShooterView}
+    // swiftlint:enable force_cast
+    override func loadView() {
+        self.view = ShooterView(frame: UIScreen.main.bounds)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sceneView.delegate = self
-        sceneView.showsStatistics = true
-        
         let scene = SCNScene()
-        sceneView.scene = scene
-        sceneView.scene.physicsWorld.contactDelegate = self
-        
-        shootButton.addTarget(self, action: #selector(shootButtonTapped), for: .touchUpInside)
-        setUpView()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        setUpSubviews()
+        mainView.sceneView.delegate = self
+        mainView.sceneView.showsStatistics = true
+        mainView.sceneView.scene = scene
+        mainView.sceneView.scene.physicsWorld.contactDelegate = self
+        mainView.onShootButtonTapped = { [weak self] in self?.shootButtonTapped()}
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
-        sceneView.session.delegate = self
-        sceneView.session.run(configuration)
+        mainView.sceneView.session.delegate = self
+        mainView.sceneView.session.run(configuration)
         countdown()
     }
     
@@ -118,32 +61,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewWillDisappear(animated)
         
         // Pause the view's session
-        sceneView.session.pause()
+        mainView.sceneView.session.pause()
     }
 }
 
 // MARK: Views
-extension ViewController {
-    
-    private func setUpView() {
-        view.addSubview(countdownLabel)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: { [self] in
-            countdownLabel.isHidden = true
-            view.addSubview(crossImage)
-            view.addSubview(scoreLabel)
-            view.addSubview(shootButton)
-            view.addSubview(timeRemainingLabel)
-        })
-    }
-    
-    private func setUpSubviews() {
-        let frame = view.frame
-        countdownLabel.frame = CGRect(x: frame.width / 2 - 25, y: frame.height / 2 - 25, width: 50, height: 50)
-        crossImage.frame = CGRect(x: frame.width / 2 - 25, y: frame.height / 2 - 25, width: 50, height: 50)
-        shootButton.frame = CGRect(x: frame.width - 120, y: frame.height - 170, width: 100, height: 100)
-        scoreLabel.frame = CGRect(x: 20, y: 100, width: frame.width - 40, height: 100)
-        timeRemainingLabel.frame = CGRect(x: 20, y: 40, width: 60, height: 40)
-    }
+extension ShooterViewController {
     
     @objc private func shootButtonTapped() {
         guard gameSet.state == .inGame else {
@@ -165,7 +88,7 @@ extension ViewController {
         )
         
         bulletsNode.physicsBody?.applyForce(impulseVector, asImpulse: true)
-        sceneView.scene.rootNode.addChildNode(bulletsNode)
+        mainView.sceneView.scene.rootNode.addChildNode(bulletsNode)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
             bulletsNode.removeFromParentNode()
@@ -174,7 +97,7 @@ extension ViewController {
 }
 
 // MARK: playing elements
-extension ViewController {
+extension ShooterViewController {
     
     func beginPlaying() {
         gameSet.state = .inGame
@@ -192,12 +115,14 @@ extension ViewController {
         let posY = floatBetween(-0.5, and: 0.5)
         let posZ = -2
         node.position = SCNVector3(posX, posY, Float(posZ))
-        sceneView.scene.rootNode.addChildNode(node)
+        DispatchQueue.main.async {
+            self.mainView.sceneView.scene.rootNode.addChildNode(node)
+        }
         gameSet.targets.append(node)
     }
     
     func getUserVector() -> (SCNVector3, SCNVector3) {
-        if let frame = self.sceneView.session.currentFrame {
+        if let frame = self.mainView.sceneView.session.currentFrame {
             let mat = SCNMatrix4(frame.camera.transform)
             let dir = SCNVector3(-1 * mat.m31, -1 * mat.m32, -1 * mat.m33)
             let pos = SCNVector3(mat.m41, mat.m42, mat.m43)
@@ -213,51 +138,56 @@ extension ViewController {
     func removeNode(_ node: SCNNode) {
         if node is Sphere {
             // make explosion
-            let scene = SCNScene(named: "art.scnassets/particles.scn")
-            let explosionNode = (scene?.rootNode.childNode(withName: "particles", recursively: true)!)!
-            
-            explosionNode.position = node.presentation.position
-            sceneView.scene.rootNode.addChildNode(explosionNode)
-            playSound(blowSoundURL)
-            
-            if let sphere = node as? Sphere {
-                if let index = gameSet.targets.firstIndex(of: sphere) {
-                    gameSet.targets.remove(at: index)
+            DispatchQueue.main.async {
+                let scene = SCNScene(named: "art.scnassets/particles.scn")
+                let explosionNode = (scene?.rootNode.childNode(withName: "particles", recursively: true)!)!
+                
+                explosionNode.position = node.presentation.position
+                self.mainView.sceneView.scene.rootNode.addChildNode(explosionNode)
+                self.playSound(self.blowSoundURL)
+                
+                if let sphere = node as? Sphere {
+                    if let index = self.gameSet.targets.firstIndex(of: sphere) {
+                        self.gameSet.targets.remove(at: index)
+                    }
                 }
             }
+           
         }
         node.removeFromParentNode()
     }
     
     func endPlaying() {
         DispatchQueue.main.async {
-            self.scoreLabel.text = "You've earned \(self.userScore) points. \n You've made \(self.shotCount) shots. \n Tap to continue."
-            self.sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+            self.mainView.scoreLabel.text = "You've earned \(self.userScore) points. \n You've made \(self.shotCount) shots. \n Tap to continue."
+            self.mainView.sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
                 node.removeFromParentNode()
             }
-            self.shootButton.isEnabled = false
+            self.mainView.shootButton.isEnabled = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-                self.shootButton.isEnabled = true
+                self.mainView.shootButton.isEnabled = true
             })
         }
         gameSet.state = .start
     }
 }
 
-extension ViewController: SCNPhysicsContactDelegate, ARSessionDelegate {
+extension ShooterViewController: SCNPhysicsContactDelegate, ARSessionDelegate {
     // bullet + sphere contact
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.target.rawValue && contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.bullets.rawValue {
-            self.removeNode(contact.nodeB)
+            DispatchQueue.main.async {
+                self.addSphere()
+            }
             self.removeNode(contact.nodeA)
+            self.removeNode(contact.nodeB)
             self.userScore += 1
-            self.addSphere()
         }
     }
 }
 
 // MARK: timer + player services
-extension ViewController {
+extension ShooterViewController {
     
     func playSound(_ url: URL) {
         do {
@@ -285,7 +215,7 @@ extension ViewController {
                 timer.invalidate()
                 beginPlaying()
             }
-            countdownLabel.text = String(counter)
+            mainView.countdownLabel.text = String(counter)
         } else {
             if timeRemaining > 0 {
                 timeRemaining -= 1
@@ -293,7 +223,7 @@ extension ViewController {
                 timer.invalidate()
                 endPlaying()
             }
-            timeRemainingLabel.text = String(timeRemaining)
+            mainView.timeRemainingLabel.text = String(timeRemaining)
         }
     }
 }

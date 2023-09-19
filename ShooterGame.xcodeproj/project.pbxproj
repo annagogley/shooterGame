@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3780A96B2AB9B74600DF196F /* CollisionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A96A2AB9B74600DF196F /* CollisionCategory.swift */; };
+		3780A9702AB9D89100DF196F /* ShooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A96F2AB9D89100DF196F /* ShooterView.swift */; };
 		37F764A72AB2093F00620C5C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F764A62AB2093F00620C5C /* AppDelegate.swift */; };
-		37F764AB2AB2093F00620C5C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F764AA2AB2093F00620C5C /* ViewController.swift */; };
-		37F764AE2AB2093F00620C5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37F764AC2AB2093F00620C5C /* Main.storyboard */; };
+		37F764AB2AB2093F00620C5C /* ShooterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F764AA2AB2093F00620C5C /* ShooterViewController.swift */; };
 		37F764B02AB2094200620C5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37F764AF2AB2094200620C5C /* Assets.xcassets */; };
 		37F764BA2AB2304800620C5C /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F764B92AB2304800620C5C /* Sphere.swift */; };
 		37F764BC2AB3091C00620C5C /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 37F764BB2AB3091B00620C5C /* art.scnassets */; };
@@ -20,10 +20,10 @@
 
 /* Begin PBXFileReference section */
 		3780A96A2AB9B74600DF196F /* CollisionCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionCategory.swift; sourceTree = "<group>"; };
+		3780A96F2AB9D89100DF196F /* ShooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShooterView.swift; sourceTree = "<group>"; };
 		37F764A32AB2093F00620C5C /* ShooterGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShooterGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37F764A62AB2093F00620C5C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		37F764AA2AB2093F00620C5C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		37F764AD2AB2093F00620C5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		37F764AA2AB2093F00620C5C /* ShooterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShooterViewController.swift; sourceTree = "<group>"; };
 		37F764AF2AB2094200620C5C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37F764B92AB2304800620C5C /* Sphere.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sphere.swift; sourceTree = "<group>"; };
 		37F764BB2AB3091B00620C5C /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; name = art.scnassets; path = ShooterGame/art.scnassets; sourceTree = SOURCE_ROOT; };
@@ -42,6 +42,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3780A9732AB9FC7900DF196F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3780A96F2AB9D89100DF196F /* ShooterView.swift */,
+				37CF7FA62AB46B0300604124 /* Nodes */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3780A9742AB9FC8100DF196F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				37F764AA2AB2093F00620C5C /* ShooterViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		3780A9752AB9FD1300DF196F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				37F764BF2AB38DDA00620C5C /* ShooterSettings.swift */,
+				3780A96A2AB9B74600DF196F /* CollisionCategory.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		37CF7FA62AB46B0300604124 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -71,11 +97,9 @@
 			isa = PBXGroup;
 			children = (
 				37F764A62AB2093F00620C5C /* AppDelegate.swift */,
-				37F764AA2AB2093F00620C5C /* ViewController.swift */,
-				37CF7FA62AB46B0300604124 /* Nodes */,
-				37F764BF2AB38DDA00620C5C /* ShooterSettings.swift */,
-				3780A96A2AB9B74600DF196F /* CollisionCategory.swift */,
-				37F764AC2AB2093F00620C5C /* Main.storyboard */,
+				3780A9742AB9FC8100DF196F /* Controller */,
+				3780A9732AB9FC7900DF196F /* View */,
+				3780A9752AB9FD1300DF196F /* Model */,
 				37F764AF2AB2094200620C5C /* Assets.xcassets */,
 				37F764BB2AB3091B00620C5C /* art.scnassets */,
 			);
@@ -143,7 +167,6 @@
 			files = (
 				37F764BC2AB3091C00620C5C /* art.scnassets in Resources */,
 				37F764B02AB2094200620C5C /* Assets.xcassets in Resources */,
-				37F764AE2AB2093F00620C5C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,8 +197,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37F764AB2AB2093F00620C5C /* ViewController.swift in Sources */,
+				37F764AB2AB2093F00620C5C /* ShooterViewController.swift in Sources */,
 				37F764C02AB38DDA00620C5C /* ShooterSettings.swift in Sources */,
+				3780A9702AB9D89100DF196F /* ShooterView.swift in Sources */,
 				3780A96B2AB9B74600DF196F /* CollisionCategory.swift in Sources */,
 				37F764A72AB2093F00620C5C /* AppDelegate.swift in Sources */,
 				37F764BA2AB2304800620C5C /* Sphere.swift in Sources */,
@@ -184,17 +208,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		37F764AC2AB2093F00620C5C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				37F764AD2AB2093F00620C5C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		37F764B42AB2094200620C5C /* Debug */ = {
@@ -320,10 +333,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 38BPR85JLN;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Shooter;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -351,10 +364,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 38BPR85JLN;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Shooter;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
