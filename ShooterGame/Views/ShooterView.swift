@@ -7,12 +7,11 @@
 
 import Foundation
 import UIKit
-import SceneKit
 import ARKit
 
 final class ShooterView: UIView {
     var onShootButtonTapped: (() -> Void)?
-    private var crossImage = UIImageView()
+    var crossImage = UIImageView()
     var countdownLabel = UILabel()
     var timeRemainingLabel = UILabel()
     var scoreLabel = UILabel()
@@ -39,7 +38,7 @@ final class ShooterView: UIView {
     }
     
     private func configureCrossImage() {
-        crossImage.image = UIImage(named: "cross")
+        crossImage.image = UIImage(named: Const.crossImage)
         crossImage.contentMode = .scaleAspectFit
         crossImage.image = crossImage.image?.withRenderingMode(.alwaysTemplate)
         crossImage.tintColor = .white

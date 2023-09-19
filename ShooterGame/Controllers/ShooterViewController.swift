@@ -8,14 +8,12 @@
 import UIKit
 import SceneKit
 import ARKit
-import AVFoundation
 
 class ShooterViewController: UIViewController, ARSCNViewDelegate {
     
     let gameSet = ShooterSettings.shared
-    var player = AVAudioPlayer()
-    let gunSoundURL =  Bundle.main.url(forResource: "art.scnassets/gun", withExtension: "mp3")!
-    let blowSoundURL =  Bundle.main.url(forResource: "art.scnassets/blow", withExtension: "mp3")!
+    var player = AudioPlayer()
+    var timer = Timer()
 
     private var shotCount: Int = 0
     private var userScore: Int = 0 {
@@ -25,8 +23,6 @@ class ShooterViewController: UIViewController, ARSCNViewDelegate {
             }
         }
     }
-    
-    var timer = Timer()
     private var counter = 3
     private var timeRemaining = 60
     
@@ -59,14 +55,9 @@ class ShooterViewController: UIViewController, ARSCNViewDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         // Pause the view's session
         mainView.sceneView.session.pause()
     }
-}
-
-// MARK: Views
-extension ShooterViewController {
     
     @objc private func shootButtonTapped() {
         guard gameSet.state == .inGame else {
@@ -75,7 +66,7 @@ extension ShooterViewController {
         }
         shotCount += 1
         let bulletsNode = Bullet()
-        playSound(gunSoundURL)
+        player.playSound(Const.gunSoundURL)
         
         let (direction, position) = self.getUserVector()
         bulletsNode.position = position
@@ -96,7 +87,7 @@ extension ShooterViewController {
     }
 }
 
-// MARK: playing elements
+// MARK: game logic
 extension ShooterViewController {
     
     func beginPlaying() {
@@ -139,12 +130,12 @@ extension ShooterViewController {
         if node is Sphere {
             // make explosion
             DispatchQueue.main.async {
-                let scene = SCNScene(named: "art.scnassets/particles.scn")
-                let explosionNode = (scene?.rootNode.childNode(withName: "particles", recursively: true)!)!
+                let scene = SCNScene(named: Const.particlesScene)
+                let explosionNode = (scene?.rootNode.childNode(withName: Const.particles, recursively: true)!)!
                 
                 explosionNode.position = node.presentation.position
                 self.mainView.sceneView.scene.rootNode.addChildNode(explosionNode)
-                self.playSound(self.blowSoundURL)
+                self.player.playSound(Const.blowSoundURL)
                 
                 if let sphere = node as? Sphere {
                     if let index = self.gameSet.targets.firstIndex(of: sphere) {
@@ -158,15 +149,13 @@ extension ShooterViewController {
     }
     
     func endPlaying() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [self] in
             self.mainView.scoreLabel.text = "You've earned \(self.userScore) points. \n You've made \(self.shotCount) shots. \n Tap to continue."
             self.mainView.sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
                 node.removeFromParentNode()
             }
-            self.mainView.shootButton.isEnabled = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-                self.mainView.shootButton.isEnabled = true
-            })
+            let accuracyScore: Double = self.shotCount != 0 ? Double(self.userScore) / Double(self.shotCount) : 0.0
+            CoreDataStack.shared.updateData(userScore: Double(self.userScore), shotScore: Double(self.shotCount), accuracyScore: accuracyScore, date: CurrentDate.shared.currentDate())
         }
         gameSet.state = .start
     }
@@ -186,18 +175,8 @@ extension ShooterViewController: SCNPhysicsContactDelegate, ARSessionDelegate {
     }
 }
 
-// MARK: timer + player services
+// MARK: timer logic
 extension ShooterViewController {
-    
-    func playSound(_ url: URL) {
-        do {
-            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
-            player.prepareToPlay()
-            player.play()
-        } catch {
-            print("there is no sound")
-        }
-    }
     
     func countdown() {
         timer = Timer.scheduledTimer(timeInterval: 1.0,
