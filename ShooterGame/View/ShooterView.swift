@@ -85,19 +85,12 @@ final class ShooterView: UIView {
     }
     
     private func setUpConstraints() {
-//        addSubview(sceneView)
         addSubview(crossImage)
-//        addSubview(countdownLabel)
         addSubview(timeRemainingLabel)
         addSubview(scoreLabel)
         addSubview(shootButton)
-//        sceneView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-//            sceneView.topAnchor.constraint(equalTo: topAnchor),
-//            sceneView.leftAnchor.constraint(equalTo: leftAnchor),
-//            sceneView.rightAnchor.constraint(equalTo: rightAnchor),
-//            sceneView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             timeRemainingLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             timeRemainingLabel.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor, constant: 20),
@@ -109,9 +102,6 @@ final class ShooterView: UIView {
             crossImage.centerXAnchor.constraint(equalTo: centerXAnchor),
             crossImage.widthAnchor.constraint(equalToConstant: 50),
             crossImage.heightAnchor.constraint(equalToConstant: 50),
-            
-//            countdownLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-//            countdownLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
             shootButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor, constant: -20),
             shootButton.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor, constant: -20),
