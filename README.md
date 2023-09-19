@@ -4,7 +4,7 @@ AR Shooter game with score counting.
 How many spheres can you shoot in 60 seconds?
 You can also check your accuracy and train every day to improve your stats.
 
-##About app
+## About app
 App builded programmatically using UIKit.
 Also used CoreData, ARKit.
 
