@@ -35,7 +35,7 @@ class StatTableViewCell: UITableViewCell {
         } else {
             label.font = .systemFont(ofSize: 16)
         }
-        label.textColor = .white
+//        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
     }
     
