@@ -26,11 +26,9 @@ class ShooterViewController: UIViewController, ARSCNViewDelegate {
     private var counter = 3
     private var timeRemaining = 60
     
-    // swiftlint:disable force_cast
-    var mainView: ShooterView { return self.view as! ShooterView}
-    // swiftlint:enable force_cast
+    var mainView = ShooterView()
     override func loadView() {
-        self.view = ShooterView(frame: UIScreen.main.bounds)
+        self.view = mainView
     }
 
     override func viewDidLoad() {
@@ -41,7 +39,7 @@ class ShooterViewController: UIViewController, ARSCNViewDelegate {
         mainView.sceneView.showsStatistics = true
         mainView.sceneView.scene = scene
         mainView.sceneView.scene.physicsWorld.contactDelegate = self
-        mainView.onShootButtonTapped = { [weak self] in self?.shootButtonTapped()}
+        mainView.shootButton.addTarget(self, action: #selector(self.shootButtonTapped), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {

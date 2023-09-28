@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3758A8A82AC55A3800F8B4A6 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3758A8A72AC55A3800F8B4A6 /* UILabelExtension.swift */; };
+		3758A8AA2AC569FA00F8B4A6 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3758A8A92AC569FA00F8B4A6 /* UIButtonExtension.swift */; };
 		3780A96B2AB9B74600DF196F /* CollisionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A96A2AB9B74600DF196F /* CollisionCategory.swift */; };
 		3780A9702AB9D89100DF196F /* ShooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A96F2AB9D89100DF196F /* ShooterView.swift */; };
 		3780A9772ABA023700DF196F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A9762ABA023700DF196F /* Constants.swift */; };
@@ -16,8 +18,7 @@
 		3780A9822ABA2F1000DF196F /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A9812ABA2F1000DF196F /* StatisticsViewController.swift */; };
 		3780A9852ABA2FBF00DF196F /* StatisticsCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3780A9832ABA2FBF00DF196F /* StatisticsCoreData.xcdatamodeld */; };
 		3780A9872ABA304C00DF196F /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A9862ABA304C00DF196F /* CoreDataStack.swift */; };
-		3780A98B2ABA3CCD00DF196F /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A98A2ABA3CCD00DF196F /* StatisticsView.swift */; };
-		3780A98D2ABA3D1900DF196F /* StatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A98C2ABA3D1900DF196F /* StatTableViewCell.swift */; };
+		3780A98D2ABA3D1900DF196F /* StatisticsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A98C2ABA3D1900DF196F /* StatisticsTableViewCell.swift */; };
 		3780A98F2ABA4D6400DF196F /* CurrentDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A98E2ABA4D6400DF196F /* CurrentDate.swift */; };
 		3780A9912ABA4DEE00DF196F /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3780A9902ABA4DEE00DF196F /* UITableViewExtension.swift */; };
 		37F764A72AB2093F00620C5C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F764A62AB2093F00620C5C /* AppDelegate.swift */; };
@@ -30,6 +31,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3758A8A72AC55A3800F8B4A6 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
+		3758A8A92AC569FA00F8B4A6 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		3780A96A2AB9B74600DF196F /* CollisionCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionCategory.swift; sourceTree = "<group>"; };
 		3780A96F2AB9D89100DF196F /* ShooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShooterView.swift; sourceTree = "<group>"; };
 		3780A9762ABA023700DF196F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -39,8 +42,7 @@
 		3780A9812ABA2F1000DF196F /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		3780A9842ABA2FBF00DF196F /* Statistics.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Statistics.xcdatamodel; sourceTree = "<group>"; };
 		3780A9862ABA304C00DF196F /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
-		3780A98A2ABA3CCD00DF196F /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
-		3780A98C2ABA3D1900DF196F /* StatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatTableViewCell.swift; sourceTree = "<group>"; };
+		3780A98C2ABA3D1900DF196F /* StatisticsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsTableViewCell.swift; sourceTree = "<group>"; };
 		3780A98E2ABA4D6400DF196F /* CurrentDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDate.swift; sourceTree = "<group>"; };
 		3780A9902ABA4DEE00DF196F /* UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		37F764A32AB2093F00620C5C /* ShooterGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShooterGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,26 +66,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3780A9732AB9FC7900DF196F /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				3780A96F2AB9D89100DF196F /* ShooterView.swift */,
-				3780A98A2ABA3CCD00DF196F /* StatisticsView.swift */,
-				3780A97F2ABA2ECF00DF196F /* StartView.swift */,
-				3780A98C2ABA3D1900DF196F /* StatTableViewCell.swift */,
-				37CF7FA62AB46B0300604124 /* Nodes */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		3780A9742AB9FC8100DF196F /* Controllers */ = {
+		3758A8A42AC554D900F8B4A6 /* ShooterView+Controller */ = {
 			isa = PBXGroup;
 			children = (
 				37F764AA2AB2093F00620C5C /* ShooterViewController.swift */,
-				3780A97D2ABA0A5D00DF196F /* StartViewController.swift */,
-				3780A9812ABA2F1000DF196F /* StatisticsViewController.swift */,
+				3780A96F2AB9D89100DF196F /* ShooterView.swift */,
+				37CF7FA62AB46B0300604124 /* Nodes */,
+				3780A9752AB9FD1300DF196F /* Models */,
 			);
-			path = Controllers;
+			path = "ShooterView+Controller";
+			sourceTree = "<group>";
+		};
+		3758A8A52AC5550F00F8B4A6 /* StatisticsView+Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3780A9812ABA2F1000DF196F /* StatisticsViewController.swift */,
+				3780A98C2ABA3D1900DF196F /* StatisticsTableViewCell.swift */,
+			);
+			path = "StatisticsView+Controller";
+			sourceTree = "<group>";
+		};
+		3758A8A62AC5551E00F8B4A6 /* StartView+Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3780A97D2ABA0A5D00DF196F /* StartViewController.swift */,
+				3780A97F2ABA2ECF00DF196F /* StartView.swift */,
+			);
+			path = "StartView+Controller";
 			sourceTree = "<group>";
 		};
 		3780A9752AB9FD1300DF196F /* Models */ = {
@@ -109,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				3780A9902ABA4DEE00DF196F /* UITableViewExtension.swift */,
+				3758A8A72AC55A3800F8B4A6 /* UILabelExtension.swift */,
+				3758A8A92AC569FA00F8B4A6 /* UIButtonExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -146,9 +157,9 @@
 				3780A9862ABA304C00DF196F /* CoreDataStack.swift */,
 				3780A9922ABA4E1A00DF196F /* Extensions */,
 				3780A97C2ABA090E00DF196F /* Helpers */,
-				3780A9742AB9FC8100DF196F /* Controllers */,
-				3780A9732AB9FC7900DF196F /* Views */,
-				3780A9752AB9FD1300DF196F /* Models */,
+				3758A8A42AC554D900F8B4A6 /* ShooterView+Controller */,
+				3758A8A52AC5550F00F8B4A6 /* StatisticsView+Controller */,
+				3758A8A62AC5551E00F8B4A6 /* StartView+Controller */,
 				37F764AF2AB2094200620C5C /* Assets.xcassets */,
 				37F764BB2AB3091B00620C5C /* art.scnassets */,
 			);
@@ -247,8 +258,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				37F764AB2AB2093F00620C5C /* ShooterViewController.swift in Sources */,
-				3780A98D2ABA3D1900DF196F /* StatTableViewCell.swift in Sources */,
-				3780A98B2ABA3CCD00DF196F /* StatisticsView.swift in Sources */,
+				3758A8AA2AC569FA00F8B4A6 /* UIButtonExtension.swift in Sources */,
+				3780A98D2ABA3D1900DF196F /* StatisticsTableViewCell.swift in Sources */,
+				3758A8A82AC55A3800F8B4A6 /* UILabelExtension.swift in Sources */,
 				3780A9802ABA2ECF00DF196F /* StartView.swift in Sources */,
 				37F764C02AB38DDA00620C5C /* ShooterSettings.swift in Sources */,
 				3780A9822ABA2F1000DF196F /* StatisticsViewController.swift in Sources */,

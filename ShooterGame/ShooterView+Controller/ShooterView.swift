@@ -10,61 +10,69 @@ import UIKit
 import ARKit
 
 final class ShooterView: UIView {
-    var onShootButtonTapped: (() -> Void)?
-    var crossImage = UIImageView()
-    var countdownLabel = UILabel()
-    var timeRemainingLabel = UILabel()
-    var scoreLabel = UILabel()
-    var shootButton = UIButton()
+    var crossImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: Const.crossImage)
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = .white
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    var countdownLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 40, weight: .bold)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    var timeRemainingLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 40, weight: .bold)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    var scoreLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        label.numberOfLines = 3
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    var shootButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+        button.setTitle("Tap", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 45
+        button.layer.masksToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     var sceneView = ARSCNView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureCrossImage()
-        configureTimeLabel(label: countdownLabel)
-        configureTimeLabel(label: timeRemainingLabel)
-        configureScoreLabel()
-        configureShootButton()
         setUpFirstConstraints()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
-            self.countdownLabel.removeFromSuperview()
-            self.setUpConstraints()
-        })
-        addAction()
+        setUpScheduledTimer()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureCrossImage() {
-        crossImage.image = UIImage(named: Const.crossImage)
-        crossImage.contentMode = .scaleAspectFit
-        crossImage.image = crossImage.image?.withRenderingMode(.alwaysTemplate)
-        crossImage.tintColor = .white
-        crossImage.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    private func configureTimeLabel(label: UILabel) {
-        label.font = .systemFont(ofSize: 40, weight: .bold)
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    private func configureScoreLabel() {
-        scoreLabel.font = .systemFont(ofSize: 20, weight: .bold)
-        scoreLabel.textAlignment = .center
-        scoreLabel.numberOfLines = 3
-        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    private func configureShootButton() {
-        shootButton.backgroundColor = UIColor.red.withAlphaComponent(0.5)
-        shootButton.setTitle("Tap", for: .normal)
-        shootButton.setTitleColor(.white, for: .normal)
-        shootButton.layer.cornerRadius = 45
-        shootButton.layer.masksToBounds = true
-        shootButton.translatesAutoresizingMaskIntoConstraints = false
+    private func setUpScheduledTimer() {
+        var runCount = 0
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            runCount += 1
+            if runCount == 3 {
+                timer.invalidate()
+                self.countdownLabel.removeFromSuperview()
+                self.setUpConstraints()
+            }
+        }
     }
     
     private func setUpFirstConstraints() {
@@ -107,13 +115,5 @@ final class ShooterView: UIView {
             shootButton.widthAnchor.constraint(equalToConstant: 100),
             shootButton.heightAnchor.constraint(equalToConstant: 100)
         ])
-    }
-    
-    func addAction() {
-        shootButton.addTarget(self, action: #selector(self.shootButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc func shootButtonTapped() {
-        onShootButtonTapped?()
     }
 }

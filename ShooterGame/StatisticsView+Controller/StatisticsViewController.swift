@@ -9,20 +9,18 @@ import UIKit
 
 class StatisticsViewController: UIViewController {
     var stats = [Statistics]()
-    // swiftlint:disable force_cast
-    var statView: StatisticsView { return self.view as! StatisticsView}
-    // swiftlint:enable force_cast
+    var statView = UITableView()
     override func loadView() {
-        self.view = StatisticsView(frame: UIScreen.main.bounds)
+        self.view = statView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         stats = CoreDataStack.shared.getAllStat()
-        statView.tableView.register(StatTableViewCell.self, forCellReuseIdentifier: StatTableViewCell.identifier)
-        statView.tableView.delegate = self
-        statView.tableView.dataSource = self
-        statView.tableView.rowHeight = UITableView.automaticDimension
+        statView.register(StatisticsTableViewCell.self, forCellReuseIdentifier: StatisticsTableViewCell.identifier)
+        statView.delegate = self
+        statView.dataSource = self
+        statView.rowHeight = UITableView.automaticDimension
     }
 }
 
@@ -37,7 +35,7 @@ extension StatisticsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = statView.tableView.dequeueReusableCell(withIdentifier: StatTableViewCell.identifier, for: indexPath) as? StatTableViewCell else {
+        guard let cell = statView.dequeueReusableCell(withIdentifier: StatisticsTableViewCell.identifier, for: indexPath) as? StatisticsTableViewCell else {
             fatalError("TableView couldn't make CustomCell")
         }
         let stat = stats[indexPath.row]
@@ -46,6 +44,6 @@ extension StatisticsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        statView.tableView.deselectRow(at: indexPath, animated: true)
+        statView.deselectRow(at: indexPath, animated: true)
     }
 }

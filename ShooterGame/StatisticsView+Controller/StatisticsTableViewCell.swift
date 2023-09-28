@@ -7,15 +7,37 @@
 
 import UIKit
 
-class StatTableViewCell: UITableViewCell {
+class StatisticsTableViewCell: UITableViewCell {
 
     static let identifier = "StatCell"
     
-    private let userScoreLabel = UILabel()
-    private let shotScoreLabel = UILabel()
-    private let accuracyLabel = UILabel()
-    private let dateLabel = UILabel()
-    private let stackView = UIStackView()
+    private let userScoreLabel: UILabel = {
+        let label = UILabel()
+        label.setupTableViewCellLabel(label: label, font: UIFont.systemFont(ofSize: 16))
+        return label
+    }()
+    private let shotScoreLabel: UILabel = {
+        let label = UILabel()
+        label.setupTableViewCellLabel(label: label, font: UIFont.systemFont(ofSize: 16))
+        return label
+    }()
+    private let accuracyLabel: UILabel = {
+        let label = UILabel()
+        label.setupTableViewCellLabel(label: label, font: UIFont.boldSystemFont(ofSize: 16))
+        return label
+    }()
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.setupTableViewCellLabel(label: label, font: UIFont.italicSystemFont(ofSize: 16))
+        return label
+    }()
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 5.0
+        stackView.alignment = .leading
+        return stackView
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,30 +49,11 @@ class StatTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupLabel(label: UILabel, isItalic: Bool, isBold: Bool) {
-        if isItalic {
-            label.font = .italicSystemFont(ofSize: 16)
-        } else if isBold {
-            label.font = .boldSystemFont(ofSize: 16)
-        } else {
-            label.font = .systemFont(ofSize: 16)
-        }
-//        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
     func setupSV() {
-        setupLabel(label: dateLabel, isItalic: true, isBold: false)
-        setupLabel(label: userScoreLabel, isItalic: false, isBold: false)
-        setupLabel(label: shotScoreLabel, isItalic: false, isBold: false)
-        setupLabel(label: accuracyLabel, isItalic: false, isBold: true)
         stackView.addArrangedSubview(dateLabel)
         stackView.addArrangedSubview(userScoreLabel)
         stackView.addArrangedSubview(shotScoreLabel)
         stackView.addArrangedSubview(accuracyLabel)
-        stackView.axis = .vertical
-        stackView.spacing = 5.0
-        stackView.alignment = .leading
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
     }

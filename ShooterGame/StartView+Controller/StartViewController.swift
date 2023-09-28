@@ -9,17 +9,15 @@ import UIKit
 
 class StartViewController: UIViewController {
     
-    // swiftlint:disable force_cast
-    var startView: StartView { return self.view as! StartView}
-    // swiftlint:enable force_cast
+    var startView = StartView()
     override func loadView() {
-        self.view = StartView(frame: UIScreen.main.bounds)
+        self.view = startView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        startView.onStartBtnTppd = { [weak self] in self?.startButtonTapped()}
-        startView.onShwStatsBtnTppd = { [weak self] in self?.showStatistics()}
+        startView.startGameButton.addTarget(self, action: #selector(self.startButtonTapped), for: .touchUpInside)
+        startView.showStatsButton.addTarget(self, action: #selector(self.showStatistics), for: .touchUpInside)
     }
     
     @objc func startButtonTapped() {
