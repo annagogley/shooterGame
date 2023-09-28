@@ -63,6 +63,7 @@ final class ShooterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: bug with asyncAfter: how to fix this?
     private func setUpScheduledTimer() {
         var runCount = 0
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
